@@ -37,19 +37,30 @@ public class StartUp {
         String basePackageStr = "com.ltsh.chat.service";
         String outPath = "D:\\test\\xiangmu\\chat\\";
         Map<String, Object> map = new HashMap<String, Object>();
-        TempleteUtils.writeFileForPage(tableName, templetePath, basePackageStr, outPath+"\\java", DataUtil.getMethodName(tableName) + ".java", "entity", "entity.temp", map);
-
-        TempleteUtils.writeFileForPage(tableName, templetePath, basePackageStr, outPath + "\\java", DataUtil.getMethodName(tableName) + "Dao.java", "dao", "dao.temp", map);
-
-        TempleteUtils.writeFile(tableName, templetePath, basePackageStr, outPath + "\\resources", "sql", DataUtil.getMethodName(tableName) + ".sql", "sqlmaps", "sql.temp", map);
+//        TempleteUtils.writeAll(tableName, templetePath, basePackageStr, outPath, "sql");
+        TempleteUtils.writeFileForPage(tableName, templetePath, basePackageStr, "entity", outPath+"\\java", DataUtil.getMethodName(tableName) + ".java", "entity.tempc", map);
+        TempleteUtils.writeFileForPage(tableName, templetePath, basePackageStr, "dao", outPath + "\\java", DataUtil.getMethodName(tableName) + "Dao.java", "dao.temp", map);
+        TempleteUtils.writeFile(tableName, templetePath, basePackageStr, "sqlmaps", outPath + "\\resources", "sql", DataUtil.getMethodName(tableName) + ".sql", "sql.temp", map);
     }
-
-    public static void main(String[] args) throws Exception {
-        String templetePath = TempleteUtils.class.getClass().getResource("/templete").getPath();
-        TempleteUtils.writeModules("user_group", templetePath,
-                "com.ltsh.chat.service",
-                "D:\\test\\xiangmu\\");
+    @Test
+    public void writeAll() throws Exception {
+        String templetePath = TempleteUtils.class.getClass().getResource("/templete/demo").getPath();
+//        TempleteUtils.writeModules("user_group", templetePath,
+//                "com.ltsh.chat.service",
+//                "D:\\test\\xiangmu\\chat\\");
+        String tableName = "user_group";
+        String basePackageStr = "com.ltsh.chat.service";
+        String outPath = "D:\\test\\xiangmu\\demo\\";
+        Map<String, Object> map = new HashMap<String, Object>();
+        TempleteUtils.writeAll(tableName, templetePath, basePackageStr, outPath, "sqlmaps");
 
     }
+//    public static void main(String[] args) throws Exception {
+//        String templetePath = TempleteUtils.class.getClass().getResource("/templete/demo").getPath();
+//        TempleteUtils.writeModules("user_group", templetePath,
+//                "com.ltsh.chat.service",
+//                "D:\\test\\xiangmu\\");
+//
+//    }
 
 }

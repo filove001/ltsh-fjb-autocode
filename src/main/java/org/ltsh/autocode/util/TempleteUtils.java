@@ -1,6 +1,7 @@
 package org.ltsh.autocode.util;
 
 
+import org.ltsh.autocode.entity.AutoEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,6 +18,13 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
+ * 调用说明
+ * 内置参数:className 类名
+ * 内置参数:tableName 表名
+ * 内置参数:columnDatas 字段数据 示例:
+ * colunmData.propertyName 字段名称
+ * colunmData.describe 字段注释
+ * columnData.dataType 字段类型
  * Created by fengjb-it on 2016/2/15 0015.
  */
 public class TempleteUtils {
@@ -30,6 +38,13 @@ public class TempleteUtils {
     public static final String TEMPLETE_REGEX_DELETE="<templete[^>]*>|</templete>";
     public static final String PRO_REGEX="\\$\\{[^}]*\\}";
 
+    /**
+     * 替换模板
+     * @param templeteStr
+     * @param repleaceMap
+     * @return
+     * @throws Exception
+     */
     public static String replaceTemplete(String templeteStr, Map<String, Object> repleaceMap) throws Exception {
         Pattern compile = Pattern.compile(PRO_REGEX);
         Matcher matcher = compile.matcher(templeteStr);
@@ -63,6 +78,13 @@ public class TempleteUtils {
         return templeteStr;
     }
 
+    /**
+     * 获取文档中的模版
+     * @param templeteStr
+     * @param templeteData
+     * @return
+     * @throws Exception
+     */
     private static String getTempleteList(String templeteStr, Map<String, Object> templeteData) throws Exception {
         Pattern pattern = Pattern.compile(TEMPLETE_REGEX);
         Matcher matcher = pattern.matcher(templeteStr);
@@ -108,6 +130,7 @@ public class TempleteUtils {
                         List<Map> list = (List<Map>) obj;
                         StringBuffer tempSb = new StringBuffer();
                         for (int j = 0; j < list.size(); j++) {
+                            list.get(j).put("index", j);
                             String s = replaceTemplete(tempelteStr, list.get(j));
                             tempSb.append(s);
                         }
@@ -142,22 +165,21 @@ public class TempleteUtils {
     }
 
 
-    public void getEntityStr(String tableName) throws Exception {
-
-        Map<String, Object> map = getData(tableName, null);
-        String templetePath = TempleteUtils.class.getClass().getResource("/templete").getPath();
-        File tempFile = new File(templetePath + "/" + "entity.temp");
-        FileReader fileReader = new FileReader(tempFile);
-        BufferedReader bufferedReader = new BufferedReader(fileReader);
-        StringBuffer sb = new StringBuffer();
-        String tempStr = null;
-        while ((tempStr = bufferedReader.readLine()) != null) {
-            sb.append(tempStr);
-            sb.append("\n");
-        }
-        bufferedReader.close();
-        getTempleteList(sb.toString(), map);
-    }
+//    public void getEntityStr(String tableName) throws Exception {
+//        Map<String, Object> map = getData(tableName, null);
+//        String templetePath = TempleteUtils.class.getClass().getResource("/templete").getPath();
+//        File tempFile = new File(templetePath + "/" + "entity.tempc");
+//        FileReader fileReader = new FileReader(tempFile);
+//        BufferedReader bufferedReader = new BufferedReader(fileReader);
+//        StringBuffer sb = new StringBuffer();
+//        String tempStr = null;
+//        while ((tempStr = bufferedReader.readLine()) != null) {
+//            sb.append(tempStr);
+//            sb.append("\n");
+//        }
+//        bufferedReader.close();
+//        getTempleteList(sb.toString(), map);
+//    }
 
     public String getTempleteStr(String tableName, String basePath, String path, Map<String, Object> map) throws Exception {
 
@@ -179,34 +201,83 @@ public class TempleteUtils {
     }
 
 
-    public static void main(String[] args) throws Exception {
-        String templetePath = TempleteUtils.class.getClass().getResource("/templete").getPath();
-        writeModules("cloud_file_push", templetePath,
-                "org.ltsh.framework.modules.manager",
-                "D:\\test\\xiangmu\\");
-    }
+//    public static void main(String[] args) throws Exception {
+//        String templetePath = TempleteUtils.class.getClass().getResource("/templete/demo").getPath();
+//        writeModules("cloud_file_push", templetePath,
+//                "org.ltsh.framework.modules.manager",
+//                "D:\\test\\xiangmu\\");
+//    }
 
+    /**
+     * 默认写入操作
+     * @param tableName 表名
+     * @param templetePath 模版位置
+     * @param basePackageStr 父级包名
+     * @param outPath 输出路径
+     * @throws Exception
+     */
     public static void writeModules(String tableName, String templetePath, String basePackageStr, String outPath) throws Exception {
         Map<String, Object> map = new HashMap<String, Object>();
 
-        writeFileForPage(tableName, templetePath, basePackageStr, outPath+"\\java", DataUtil.getMethodName(tableName) + ".java", "entity", "entity.temp", map);
+        writeFileForPage(tableName, templetePath, basePackageStr, outPath+"\\java", DataUtil.getMethodName(tableName) + ".java", "entity", "entity.temps", map);
 
-        writeFileForPage(tableName, templetePath, basePackageStr, outPath + "\\java", DataUtil.getMethodName(tableName) + "Mapper.java", "dao", "mapper.temp", map);
+        writeFileForPage(tableName, templetePath, basePackageStr, outPath + "\\java", DataUtil.getMethodName(tableName) + "Mapper.java", "dao", "mapper.temps", map);
 
-        writeFile(tableName, templetePath, basePackageStr, outPath + "\\resources", "sqlmaps", DataUtil.getMethodName(tableName) + "Mapper.xml", "sqlmaps", "mapper.xml.temp", map);
+        writeFile(tableName, templetePath, basePackageStr, outPath + "\\resources", "sqlmaps", DataUtil.getMethodName(tableName) + "Mapper.xml", "sqlmaps", "mapper.xml.tempc", map);
     }
-    public static void writeFile(String tableName, String templetePath, String basePackageStr, String outPath, String modulesPath, String fileName, String modulesName, String templeteName, Map<String, Object> map) throws Exception{
-        if(map == null) {
-            map = new HashMap<String, Object>();
+
+
+    /**
+     * 默认写入操作
+     * @param tableName 表名
+     * @param templetePath 模版位置
+     * @param basePackageStr 父级包名
+     * @param outPath 输出路径
+     * @throws Exception
+     */
+    public static void writeAll(String tableName, String templetePath, String basePackageStr, String outPath, String sourceSrc) throws Exception {
+        Map<String, Object> map = new HashMap<String, Object>();
+        File templetePathFile = new File(templetePath);
+        String[] list = templetePathFile.list();
+        for (String str : list) {
+            if(str.endsWith(".tempc")) {
+                writeFileForPage(tableName, templetePath, basePackageStr, str.substring(0, str.indexOf(".")), outPath+"\\java", DataUtil.getMethodName(tableName) + ".java", str, map);
+            } else if(str.endsWith(".temps")) {
+                writeFile(tableName, templetePath, basePackageStr, sourceSrc, outPath + "\\resources", sourceSrc, DataUtil.getMethodName(tableName) + str.substring(0, str.lastIndexOf(".")), str, map);
+            }
+        }
+
+    }
+    /**
+     *
+     * @throws Exception
+     */
+    public static void writeFile(AutoEntity autoEntity) throws Exception{
+        Map<String, Object> map = new HashMap<String, Object>();
+        if(autoEntity.getExtraParams() != null) {
+            map.putAll(autoEntity.getExtraParams());
         }
         TempleteUtils templeteUtils = new TempleteUtils();
-        map.put("packageName", basePackageStr);
-        map.put("modulesName", modulesName);
-        String templeteStr = templeteUtils.getTempleteStr(tableName, templetePath, templeteName, map);
-        TempleteFileUtils.writeFile(templeteStr, fileName, outPath + "/" + modulesPath + "/");
+        map.put("packageName", autoEntity.getBasePackageStr());
+        map.put("modulesName", autoEntity.getModulesName());
+        String templeteStr = templeteUtils.getTempleteStr(autoEntity.getTableName(), autoEntity.getTempletePath(), autoEntity.getTempleteName(), map);
+        TempleteFileUtils.writeFile(templeteStr, autoEntity.getFileName(), autoEntity.getOutPath() + "/" + autoEntity.getModulesPath() + "/");
     }
 
-    public static void writeFileForPage(String tableName, String templetePath, String basePackageStr, String outPath, String fileName, String modulesName, String templeteName, Map<String, Object> map) throws Exception{
+    /**
+     *
+     * @param tableName 表名
+     * @param templetePath 模版位置
+     * @param basePackageStr 父级包名
+     * @param outPath 输出路径
+     * @param fileName 文件名称
+     * @param modulesName 模块名称
+     * @param templeteName 模板名称
+     * @param map 额外参数
+     * @throws Exception
+     */
+    public static void writeFileForPage(String tableName, String templetePath, String modulesName, String basePackageStr, String outPath, String fileName, String templeteName, Map<String, Object> map) throws Exception{
+        AutoEntity autoEntity
         writeFile(tableName, templetePath, basePackageStr, outPath, basePackageStr.replaceAll("\\.","/") + "/" + modulesName, fileName, modulesName, templeteName, map);
     }
 
