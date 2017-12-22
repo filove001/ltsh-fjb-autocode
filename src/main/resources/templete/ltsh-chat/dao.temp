@@ -1,0 +1,10 @@
+package ${packageName}.${modulesName};
+
+import ${packageName}.${modulesName}.${className};
+import org.beetl.sql.core.mapper.BaseMapper;
+
+/**
+ * Created by Random on 2017/10/9.
+ */
+public interface ${className}Dao extends BaseMapper<${className}> {
+}

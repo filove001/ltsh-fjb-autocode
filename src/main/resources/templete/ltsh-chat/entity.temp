@@ -1,0 +1,13 @@
+package ${packageName}.${modulesName};
+
+import lombok.Data;
+
+@Data
+public class ${className} {
+    <templete id="1" dataSource="columnDatas" type="for">
+        /**
+         * ${describe}
+         **/
+        private ${dataType} ${propertyName};
+    </templete>
+}
