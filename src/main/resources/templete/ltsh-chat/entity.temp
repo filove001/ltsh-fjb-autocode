@@ -1,9 +1,12 @@
-package ${packageName}.${modulesName};
+package ${packageName};
 
 import lombok.Data;
 
+/**
+ * Created by fengjianbo on ${currentDate}.
+ */
 @Data
-public class ${className} {
+public class ${className} extends BaseEntity {
     <templete id="1" dataSource="columnDatas" type="for">
         /**
          * ${describe}

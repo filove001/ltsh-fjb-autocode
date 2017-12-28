@@ -1,9 +1,12 @@
-package org.ltsh.autocode.util;
+package org.ltsh.generate.templete;
 
-import java.io.*;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 /**
- * Created by fengjb-it on 2016/3/29 0029.
+ * Created by fengjianbo on 2016/3/29 0029.
  */
 public class TempleteFileUtils {
     public static void writeFile(String templeteStr, String fileName, String baseOutPath) throws IOException {

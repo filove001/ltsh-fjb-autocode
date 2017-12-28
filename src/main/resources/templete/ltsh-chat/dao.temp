@@ -1,0 +1,9 @@
+package ${packageName};
+
+import ${entityPackage}.${className};
+
+/**
+ * Created by fengjianbo on ${currentDate}.
+ */
+public interface ${className}Dao extends BaseDao<${className}> {
+}

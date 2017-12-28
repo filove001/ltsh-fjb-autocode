@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+	<jdbcConfig jdbcJarPath="file:E:\ruanjian\java\maven\repository\mysql\mysql-connector-java\5.1.32\mysql-connector-java-5.1.32.jar"
+				driverClass="com.mysql.jdbc.Driver"
+				connectionURL="jdbc:mysql://127.0.0.1:3306/ltsh?characterEncoding=utf8"
+				userName="root"
+				password="root"
+				useJdbc="true"
+
+	/>
+	<templeteList>
+		<templete id="sqlTemplete"
+				  templetePath="/templete/ltsh-chat/sql.temp"
+				  targetPackage=""
+				  outPath="D:\work\ideaWork\ltsh-gradle-project\ltsh-chat-web\src\main\resources\sql" fileEncoding="utf-8">
+			<!--<extras>-->
+				<!--<property name="1" value="11" />-->
+				<!--<property name="2" value="22" />-->
+			<!--</extras>-->
+		</templete>
+		<templete id="entityTemplete"
+				  templetePath="/templete/ltsh-chat/entity.temp"
+				  targetPackage="com.ltsh.chat.service.entity"
+				  outPath="D:\work\ideaWork\ltsh-gradle-project\ltsh-chat-web\src\main\java"
+				  fileEncoding="utf-8">
+			<extras>
+				<property name="skipColumn" value=",id,createBy,createTime,updateBy,updateTime," />
+			</extras>
+		</templete>
+		<templete id="daoTemplete"
+				  templetePath="/templete/ltsh-chat/dao.temp"
+				  targetPackage="com.ltsh.chat.service.dao"
+				  outPath="D:\work\ideaWork\ltsh-gradle-project\ltsh-chat-web\src\main\java"
+				  fileEncoding="utf-8">
+			<extras>
+				<property name="entityPackage" value="com.ltsh.chat.service.entity" />
+			</extras>
+		</templete>
+		<templete id="serviceTemplete"
+				  templetePath="/templete/ltsh-chat/service.temp"
+				  targetPackage="com.ltsh.chat.service.api"
+				  outPath="D:\work\ideaWork\ltsh-gradle-project\ltsh-chat-web\src\main\java"
+				  fileEncoding="utf-8">
+			<extras>
+				<property name="entityPackage" value="com.ltsh.chat.service.entity" />
+			</extras>
+		</templete>
+		<templete id="serviceImplTemplete"
+				  templetePath="/templete/ltsh-chat/serviceImpl.temp"
+				  targetPackage="com.ltsh.chat.service.impl"
+				  outPath="D:\work\ideaWork\ltsh-gradle-project\ltsh-chat-web\src\main\java"
+				  fileEncoding="utf-8">
+			<extras>
+				<property name="entityPackage" value="com.ltsh.chat.service.entity" />
+				<property name="daoPackage" value="com.ltsh.chat.service.dao" />
+				<property name="apiPackage" value="com.ltsh.chat.service.api" />
+			</extras>
+		</templete>
+	</templeteList>
+	<generateList>
+		<!--<generate tableName="message_info" fileName="MessageInfo.java" refTemplete="entityTemplete"></generate>-->
+		<generate tableName="user_group" fileName="userGroup.sql" refTemplete="sqlTemplete"></generate>
+		<generate tableName="user_group" fileName="UserGroup.java" refTemplete="entityTemplete"></generate>
+		<generate tableName="user_group" fileName="UserGroupDao.java" refTemplete="daoTemplete"></generate>
+
+		<generate tableName="user_group" fileName="UserGroupService.java" refTemplete="serviceTemplete"></generate>
+		<generate tableName="user_group" fileName="UserGroupServiceImpl.java" refTemplete="serviceImplTemplete"></generate>
+
+		<!-- 群组成员 -->
+		<generate tableName="user_group_rel" fileName="userGroup.sql" refTemplete="sqlTemplete"></generate>
+		<generate tableName="user_group_rel" fileName="UserGroupRel.java" refTemplete="entityTemplete"></generate>
+		<generate tableName="user_group_rel" fileName="UserGroupRelDao.java" refTemplete="daoTemplete"></generate>
+
+		<generate tableName="user_group_rel" fileName="UserGroupRelService.java" refTemplete="serviceTemplete"></generate>
+		<generate tableName="user_group_rel" fileName="UserGroupRelServiceImpl.java" refTemplete="serviceImplTemplete"></generate>
+
+
+
+	</generateList>
+</configuration>

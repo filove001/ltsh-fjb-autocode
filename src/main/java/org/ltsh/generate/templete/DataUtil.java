@@ -1,22 +1,18 @@
-package org.ltsh.autocode.util;
+package org.ltsh.generate.templete;
 
-import org.ltsh.autocode.dao.BaseDao;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.FileSystemXmlApplicationContext;
+
+import org.ltsh.generate.jdbc.BaseDao;
 
 import java.util.List;
 import java.util.Map;
 
 /**
- * Created by fengjb-it on 2016/3/28 0028.
+ * Created by fengjianbo on 2016/3/28 0028.
  */
 public class DataUtil {
-    private static ApplicationContext context = new FileSystemXmlApplicationContext("classpath:applicationContext.xml");
-
     public static List<Map<String, Object>> getColumnData(String tableName){
         List<Map<String, Object>> columnDatas = null;
-        BaseDao baseDao = context.getBean(BaseDao.class);
-        columnDatas = baseDao.queryColumns(tableName);
+        columnDatas = BaseDao.queryColumns(tableName);
         for (int i = 0; i < columnDatas.size(); i++) {
             Map<String, Object> stringObjectMap = columnDatas.get(i);
             String columnName = String.valueOf(stringObjectMap.get("column_name"));
