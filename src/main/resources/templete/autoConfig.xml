@@ -67,7 +67,7 @@
 		<generate tableName="user_group" fileName="UserGroupServiceImpl.java" refTemplete="serviceImplTemplete"></generate>
 
 		<!-- 群组成员 -->
-		<generate tableName="user_group_rel" fileName="userGroup.sql" refTemplete="sqlTemplete"></generate>
+		<generate tableName="user_group_rel" fileName="userGroupRel.sql" refTemplete="sqlTemplete"></generate>
 		<generate tableName="user_group_rel" fileName="UserGroupRel.java" refTemplete="entityTemplete"></generate>
 		<generate tableName="user_group_rel" fileName="UserGroupRelDao.java" refTemplete="daoTemplete"></generate>
 
