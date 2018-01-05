@@ -264,7 +264,7 @@ public class TempleteUtils {
 
         String fileName = entity.getFileName();
         String templeteStr = templeteUtils.getTempleteStr(entity.getTableName(), entity.getTempletePath(), map);
-        System.out.println("生成文件:" + entity.getOutPath());
+        System.out.println("生成文件:" + entity.getOutPath() + fileName);
         TempleteFileUtils.writeFile(templeteStr, fileName, entity.getOutPath());
     }
 

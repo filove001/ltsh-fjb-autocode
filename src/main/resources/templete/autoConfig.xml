@@ -59,22 +59,31 @@
 	</templeteList>
 	<generateList>
 		<!--<generate tableName="message_info" fileName="MessageInfo.java" refTemplete="entityTemplete"></generate>-->
-		<generate tableName="user_group" fileName="userGroup.sql" refTemplete="sqlTemplete"></generate>
-		<generate tableName="user_group" fileName="UserGroup.java" refTemplete="entityTemplete"></generate>
-		<generate tableName="user_group" fileName="UserGroupDao.java" refTemplete="daoTemplete"></generate>
+		<!--<generate tableName="user_group" fileName="userGroup.sql" refTemplete="sqlTemplete"></generate>-->
+		<!--<generate tableName="user_group" fileName="UserGroup.java" refTemplete="entityTemplete"></generate>-->
+		<!--<generate tableName="user_group" fileName="UserGroupDao.java" refTemplete="daoTemplete"></generate>-->
 
-		<generate tableName="user_group" fileName="UserGroupService.java" refTemplete="serviceTemplete"></generate>
-		<generate tableName="user_group" fileName="UserGroupServiceImpl.java" refTemplete="serviceImplTemplete"></generate>
+		<!--<generate tableName="user_group" fileName="UserGroupService.java" refTemplete="serviceTemplete"></generate>-->
+		<!--<generate tableName="user_group" fileName="UserGroupServiceImpl.java" refTemplete="serviceImplTemplete"></generate>-->
 
 		<!-- 群组成员 -->
-		<generate tableName="user_group_rel" fileName="userGroupRel.sql" refTemplete="sqlTemplete"></generate>
-		<generate tableName="user_group_rel" fileName="UserGroupRel.java" refTemplete="entityTemplete"></generate>
-		<generate tableName="user_group_rel" fileName="UserGroupRelDao.java" refTemplete="daoTemplete"></generate>
+		<!--<generate tableName="user_group_rel" fileName="userGroupRel.sql" refTemplete="sqlTemplete"></generate>-->
+		<!--<generate tableName="user_group_rel" fileName="UserGroupRel.java" refTemplete="entityTemplete"></generate>-->
+		<!--<generate tableName="user_group_rel" fileName="UserGroupRelDao.java" refTemplete="daoTemplete"></generate>-->
 
-		<generate tableName="user_group_rel" fileName="UserGroupRelService.java" refTemplete="serviceTemplete"></generate>
-		<generate tableName="user_group_rel" fileName="UserGroupRelServiceImpl.java" refTemplete="serviceImplTemplete"></generate>
+		<!--<generate tableName="user_group_rel" fileName="UserGroupRelService.java" refTemplete="serviceTemplete"></generate>-->
+		<!--<generate tableName="user_group_rel" fileName="UserGroupRelServiceImpl.java" refTemplete="serviceImplTemplete"></generate>-->
 
 
+		<!-- 消息文件记录 -->
+
+
+		<generate tableName="message_info_file" fileName="messageInfoFile.sql" refTemplete="sqlTemplete"></generate>
+		<generate tableName="message_info_file" fileName="MessageInfoFile.java" refTemplete="entityTemplete"></generate>
+		<generate tableName="message_info_file" fileName="MessageInfoFileDao.java" refTemplete="daoTemplete"></generate>
+
+		<generate tableName="message_info_file" fileName="MessageInfoFileService.java" refTemplete="serviceTemplete"></generate>
+		<generate tableName="message_info_file" fileName="MessageInfoFileServiceImpl.java" refTemplete="serviceImplTemplete"></generate>
 
 	</generateList>
 </configuration>
