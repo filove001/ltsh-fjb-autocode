@@ -32,6 +32,16 @@ public class JdbcConfig {
 
     private String useJdbc;
 
+    private String useInformationSchema;
+
+    public String getUseInformationSchema() {
+        return useInformationSchema;
+    }
+
+    public void setUseInformationSchema(String useInformationSchema) {
+        this.useInformationSchema = useInformationSchema;
+    }
+
     public String getUseJdbc() {
         return useJdbc;
     }

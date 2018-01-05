@@ -19,7 +19,7 @@ public class BaseDao {
             URL url1 = new URL(jdbcJarPath);
             URLClassLoader myClassLoader1 = new URLClassLoader(new URL[] { url1 }, Thread.currentThread()
                     .getContextClassLoader());
-            Class<?> aClass = myClassLoader1.loadClass("com.mysql.jdbc.Driver");
+            Class<?> aClass = myClassLoader1.loadClass(GlobalConfig.jdbcConfig.getDriverClass());
             Driver driver = (Driver)aClass.newInstance();
             BaseDao.driver = driver;
         }
@@ -33,7 +33,7 @@ public class BaseDao {
             Properties properties = new Properties();
             properties.put("user", GlobalConfig.jdbcConfig.getUserName());
             properties.put("password", GlobalConfig.jdbcConfig.getPassword());
-            properties.setProperty("useInformationSchema", "true");
+            properties.setProperty("useInformationSchema", GlobalConfig.jdbcConfig.getUseInformationSchema());
             return driver.connect(connectionURL, properties);
         }
         return null;

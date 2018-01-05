@@ -6,6 +6,7 @@
 				userName="root"
 				password="root"
 				useJdbc="true"
+				useInformationSchema="true"
 
 	/>
 	<templeteList>
