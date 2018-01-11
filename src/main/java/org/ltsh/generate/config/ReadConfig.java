@@ -24,7 +24,7 @@ public class ReadConfig {
         }
     }
     public static void readConfig(String path) throws Exception {
-        InputStream resourceAsStream = ReadConfig.class.getResourceAsStream("/templete/autoConfig.xml");
+        InputStream resourceAsStream = ReadConfig.class.getResourceAsStream(path);
         Map configuration = ReadXml.xmlToMap(resourceAsStream, "configuration");
         Map jdbcConfigMap = (Map)configuration.get("jdbcConfig");
         if(jdbcConfigMap == null || jdbcConfigMap.isEmpty()){

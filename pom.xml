@@ -52,6 +52,9 @@
         <groupId>org.ltsh.generate</groupId>
         <artifactId>code-generate</artifactId>
         <version>1.0.0-SNAPSHOT</version>
+        <configuration>
+          <configPath>/templete/autoConfig.xml</configPath>
+        </configuration>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
