@@ -1,8 +1,0 @@
-package ${packageName}.${modulesName};
-
-/**
- * Created by fengjb-it
- */
-public interface ${className}Mapper extends BaseMapper  {
-
-}

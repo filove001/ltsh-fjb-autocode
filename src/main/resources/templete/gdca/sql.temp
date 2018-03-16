@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="${className}Mapper">
-    <resultMap id="resultMap" type="${packageName}.${modulesName}.${className}">
+<mapper namespace="${daoPackage}.${className}Dao">
+    <resultMap id="BaseResultMap" type="${entityPackage}.${className}">
+         <id column="${column_name}" property="${propertyName}" />
         <templete id="1" dataSource="columnDatas" type="for">
-            <id column="${column_name}" property="${propertyName}" />
+
+            <result column="${column_name}" property="${propertyName}"/>
         </templete>
     </resultMap>
-    <sql id="commonColumn">
+    <sql id="Base_Column_List">
         <templete id="2" dataSource="columnDatas" type="for" trim=",">
             ${column_name},
         </templete>
@@ -33,8 +35,8 @@
     <sql id="tableName">
         ${tableName}
     </sql>
-    <insert id="add" keyProperty="id" useGeneratedKeys="true">
-        insert into <include refid="tableName"/>(<include refid="commonColumn"/>)
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into <include refid="tableName"/>(<include refid="Base_Column_List"/>)
         values(<include refid="commonProperty"/>)
     </insert>
     <update id="update">
@@ -49,12 +51,17 @@
         where id=#{id}
     </delete>
     <select id="selectByExample" >
-        select <include refid="commonColumn"/>
+        select <include refid="Base_Column_List"/>
         from <include refid="tableName"/>
         <where>
             <include refid="updateColumn"/>
         </where>
     </select>
-
+    <select id="getById" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+        select
+        <include refid="Base_Column_List" />
+        from <include refid="tableName"/>
+        where id = #{id}
+    </select>
 </mapper>
 

@@ -38,8 +38,8 @@ public class BaseDao {
         }
         return null;
     }
-    public static List<Map<String, Object>> queryColumns(String tableName){
-        String sql = "SELECT table_name,column_name,data_type,column_type,column_comment,is_nullable FROM information_schema.COLUMNS WHERE table_name=?";
+    public static List<Map<String, Object>> queryColumns(String tableName, String database){
+        String sql = "SELECT table_name,column_name,data_type,column_type,column_comment,is_nullable FROM information_schema.COLUMNS WHERE table_name=? and table_schema=?";
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet rs = null;
@@ -47,6 +47,7 @@ public class BaseDao {
             connection = getConnection();
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, tableName);
+            preparedStatement.setString(2, database);
             rs = preparedStatement.executeQuery();
             ResultSetMetaData metaData = rs.getMetaData();
             int columnCount = metaData.getColumnCount();

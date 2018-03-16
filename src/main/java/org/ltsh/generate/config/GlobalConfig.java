@@ -7,6 +7,7 @@ import java.util.List;
  * Created by fengjianbo on 2017/12/26.
  */
 public class GlobalConfig {
+    public static ApplicationConfig applicationConfig;
     /**
      * 数据库配置
      */

@@ -1,0 +1,75 @@
+package ${packageName};
+
+import ${apiPackage}.${className}Service;
+
+import ${daoPackage}.${className}Dao;
+import ${entityPackage}.${className};
+import com.gdca.signofcloud.common.context.ApiContext;
+import com.gdca.signofcloud.common.entity.Result;
+import com.gdca.signofcloud.common.page.PageBean;
+import com.gdca.signofcloud.common.page.PageParam;
+import com.gdca.signofcloud.common.utils.PageUtil;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+/**
+ * Created by fengjianbo on ${currentDate}.
+ */
+@Service(value="${lowerClassName}Service")
+@Transactional
+public class ${className}ServiceImpl  implements ${className}Service {
+    @Autowired
+    private ${className}Dao ${lowerClassName}Dao;
+
+
+   /**
+     * 创建
+     * @param apiContext
+     */
+    public Result<${className}> insert(ApiContext apiContext, ${className} ${lowerClassName}) {
+        long count = ${lowerClassName}Dao.insert(${lowerClassName});
+        return new Result(ResultCodeEnum.SUCCESS);
+    }
+     /**
+      * 查询列表
+      * @param apiContext
+      * @param pageParam 分页参数
+      * @param params 查询参数
+      */
+    @Override
+    public Result<PageBean<${className}>> listPage(ApiContext apiContext, PageParam pageParam, Map params) {
+        PageBean pageBean = PageUtil.getResult(pageParam, params, ${lowerClassName}Dao);
+        return new Result(pageBean);
+    }
+    /**
+     * 获取详情
+     * @param apiContext
+     */
+    public Result<${className}> getById(ApiContext apiContext, Long id) {
+        ${className} ${lowerClassName} = ${lowerClassName}Dao.getById(id);
+        return new Result<>(${lowerClassName});
+    }
+
+    /**
+     * 修改
+     * @param apiContext
+     * @param ${lowerClassName}
+     * @return
+     */
+    public Result update(ApiContext apiContext, ${className} ${lowerClassName}) {
+        int update = ${lowerClassName}Dao.update(${lowerClassName});
+        return new Result(ResultCodeEnum.SUCCESS);
+    }
+
+
+    /**
+     * 根据ID删除记录.
+     * @param id       .
+     * @return
+     */
+    public Result deleteById(ApiContext apiContext, long id) {
+        ${lowerClassName}Dao.deleteById(id);
+        return new Result(ResultCodeEnum.SUCCESS);
+    }
+}

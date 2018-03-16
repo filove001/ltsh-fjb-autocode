@@ -2,59 +2,59 @@
 <configuration>
 	<jdbcConfig jdbcJarPath="file:E:\ruanjian\java\maven\repository\mysql\mysql-connector-java\5.1.32\mysql-connector-java-5.1.32.jar"
 				driverClass="com.mysql.jdbc.Driver"
-				connectionURL="jdbc:mysql://127.0.0.1:3306/ltsh?characterEncoding=utf8"
+				connectionURL="jdbc:mysql://192.168.10.121:3306/signofcloud?characterEncoding=utf8"
 				userName="root"
-				password="root"
+				password="gdca@123"
 				useJdbc="true"
 				useInformationSchema="true"
 
 	/>
 	<templeteList>
 		<templete id="sqlTemplete"
-				  templetePath="/templete/ltsh-chat/sql.temp"
+				  templetePath="/templete/gdca/sql.temp"
 				  targetPackage=""
-				  outPath="D:\work\ideaWork\ltsh-gradle-project\ltsh-chat-web\src\main\resources\sql" fileEncoding="utf-8">
-			<!--<extras>-->
-				<!--<property name="1" value="11" />-->
-				<!--<property name="2" value="22" />-->
-			<!--</extras>-->
+				  outPath="D:\work\ideaWork\service\signofcloud-sys-service\src\main\resources\mybatis\mapper" fileEncoding="utf-8">
+			<extras>
+				<property name="entityPackage" value="com.gdca.signofcloud.sys.entity" />
+				<property name="daoPackage" value="com.gdca.signofcloud.sys.dao" />
+			</extras>
 		</templete>
 		<templete id="entityTemplete"
-				  templetePath="/templete/ltsh-chat/entity.temp"
-				  targetPackage="com.ltsh.chat.service.entity"
-				  outPath="D:\work\ideaWork\ltsh-gradle-project\ltsh-chat-web\src\main\java"
+				  templetePath="/templete/gdca/entity.temp"
+				  targetPackage="com.gdca.signofcloud.sys.entity"
+				  outPath="D:\work\ideaWork\service\signofcloud-sys-api\src\main\java"
 				  fileEncoding="utf-8">
 			<extras>
 				<property name="skipColumn" value=",id,createBy,createTime,updateBy,updateTime," />
 			</extras>
 		</templete>
 		<templete id="daoTemplete"
-				  templetePath="/templete/ltsh-chat/dao.temp"
-				  targetPackage="com.ltsh.chat.service.dao"
-				  outPath="D:\work\ideaWork\ltsh-gradle-project\ltsh-chat-web\src\main\java"
+				  templetePath="/templete/gdca/dao.temp"
+				  targetPackage="com.gdca.signofcloud.sys.dao"
+				  outPath="D:\work\ideaWork\service\signofcloud-sys-service\src\main\java"
 				  fileEncoding="utf-8">
 			<extras>
-				<property name="entityPackage" value="com.ltsh.chat.service.entity" />
+				<property name="entityPackage" value="com.gdca.signofcloud.sys.entity" />
 			</extras>
 		</templete>
 		<templete id="serviceTemplete"
-				  templetePath="/templete/ltsh-chat/service.temp"
-				  targetPackage="com.ltsh.chat.service.api"
-				  outPath="D:\work\ideaWork\ltsh-gradle-project\ltsh-chat-web\src\main\java"
+				  templetePath="/templete/gdca/service.temp"
+				  targetPackage="com.gdca.signofcloud.sys.api"
+				  outPath="D:\work\ideaWork\service\signofcloud-sys-api\src\main\java"
 				  fileEncoding="utf-8">
 			<extras>
-				<property name="entityPackage" value="com.ltsh.chat.service.entity" />
+				<property name="entityPackage" value="com.gdca.signofcloud.sys.entity" />
 			</extras>
 		</templete>
 		<templete id="serviceImplTemplete"
-				  templetePath="/templete/ltsh-chat/serviceImpl.temp"
-				  targetPackage="com.ltsh.chat.service.impl"
-				  outPath="D:\work\ideaWork\ltsh-gradle-project\ltsh-chat-web\src\main\java"
+				  templetePath="/templete/gdca/serviceImpl.temp"
+				  targetPackage="com.gdca.signofcloud.sys.service.impl"
+				  outPath="D:\work\ideaWork\service\signofcloud-sys-service\src\main\java"
 				  fileEncoding="utf-8">
 			<extras>
-				<property name="entityPackage" value="com.ltsh.chat.service.entity" />
-				<property name="daoPackage" value="com.ltsh.chat.service.dao" />
-				<property name="apiPackage" value="com.ltsh.chat.service.api" />
+				<property name="entityPackage" value="com.gdca.signofcloud.sys.entity" />
+				<property name="daoPackage" value="com.gdca.signofcloud.sys.dao" />
+				<property name="apiPackage" value="com.gdca.signofcloud.sys.api" />
 			</extras>
 		</templete>
 	</templeteList>
@@ -79,12 +79,12 @@
 		<!-- 消息文件记录 -->
 
 
-		<generate tableName="message_info_file" fileName="messageInfoFile.sql" refTemplete="sqlTemplete"></generate>
-		<generate tableName="message_info_file" fileName="MessageInfoFile.java" refTemplete="entityTemplete"></generate>
-		<generate tableName="message_info_file" fileName="MessageInfoFileDao.java" refTemplete="daoTemplete"></generate>
+		<generate tableName="sys_basic_config" fileName="SysBasicConfigMapper.xml" refTemplete="sqlTemplete"></generate>
+		<generate tableName="sys_basic_config" fileName="SysBasicConfig.java" refTemplete="entityTemplete"></generate>
+		<generate tableName="sys_basic_config" fileName="SysBasicConfigDao.java" refTemplete="daoTemplete"></generate>
 
-		<generate tableName="message_info_file" fileName="MessageInfoFileService.java" refTemplete="serviceTemplete"></generate>
-		<generate tableName="message_info_file" fileName="MessageInfoFileServiceImpl.java" refTemplete="serviceImplTemplete"></generate>
+		<generate tableName="sys_basic_config" fileName="SysBasicConfigService.java" refTemplete="serviceTemplete"></generate>
+		<generate tableName="sys_basic_config" fileName="SysBasicConfigServiceImpl.java" refTemplete="serviceImplTemplete"></generate>
 
 	</generateList>
 </configuration>

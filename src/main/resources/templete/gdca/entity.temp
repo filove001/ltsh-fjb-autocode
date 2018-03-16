@@ -1,11 +1,10 @@
 package ${packageName};
 
-import lombok.Data;
+import com.gdca.signofcloud.common.entity.BaseEntity;
 
 /**
  * Created by fengjianbo on ${currentDate}.
  */
-@Data
 public class ${className} extends BaseEntity {
     <templete id="1" dataSource="columnDatas" type="for">
         /**

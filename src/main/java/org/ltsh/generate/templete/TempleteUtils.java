@@ -2,12 +2,14 @@ package org.ltsh.generate.templete;
 
 
 
+import org.ltsh.generate.config.GlobalConfig;
 import org.ltsh.generate.entity.GenerateEntity;
 import org.ltsh.generate.entity.PackageGenerateEntity;
 import org.ltsh.generate.jdbc.BaseDao;
 import org.ltsh.generate.utils.DateUtils;
 
 import java.io.*;
+import java.net.URL;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -148,6 +150,34 @@ public class TempleteUtils {
                     }
 
                 }
+                if("if".equals(propertyMap.get(TEMPLETE_TYPE_STR))) {
+                    Object obj = templeteData.get(propertyMap.get(TEMPLETE_DATASOURCE_STR));
+                    if(obj instanceof List) {
+                        List<Map> list = (List<Map>) obj;
+                        StringBuffer tempSb = new StringBuffer();
+                        for (int j = 0; j < list.size(); j++) {
+                            list.get(j).put("index", j);
+                            if(templeteData.get("skipColumn") != null) {
+                                if(templeteData.get("skipColumn").toString().contains("," + list.get(j).get("propertyName") + ",")) {
+                                    continue;
+                                }
+                            }
+                            String s = replaceTemplete(tempelteStr, list.get(j));
+
+                            tempSb.append(s);
+//                            if(tempSb.t.substring(2).equals("\n")) {
+//                                tempSb.delete(0,2);
+//                            }
+                        }
+                        String trim = propertyMap.get("trim");
+                        if(trim != null && tempSb.toString().trim().endsWith(trim)) {
+                            tempSb = new StringBuffer(tempSb.substring(0, tempSb.lastIndexOf(",")));
+                        }
+                        tempStr = tempStr.replace(index, tempSb.toString());
+
+                    }
+
+                }
             }
         }
         return tempStr;
@@ -180,8 +210,9 @@ public class TempleteUtils {
             tempFile.mkdirs();
         }
 //        FileReader fileReader = new FileReader(tempFile);
-        InputStream resourceAsStream = TempleteUtils.class.getResourceAsStream(basePath);
-        InputStreamReader inputStreamReader = new InputStreamReader(resourceAsStream);
+        FileInputStream fileInputStream = new FileInputStream(basePath);
+//        InputStream resourceAsStream = TempleteUtils.class.getResourceAsStream(basePath);
+        InputStreamReader inputStreamReader = new InputStreamReader(fileInputStream);
         BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
         StringBuffer sb = new StringBuffer();
         String tempStr = null;
@@ -276,8 +307,8 @@ public class TempleteUtils {
 //        autoEntity.setModulesPath(autoEntity.getBasePackageStr().replaceAll("\\.","/") + "/" + autoEntity.getModulesName());
 //        GenerateEntity generateEntity = new GenerateEntity();
         String outPath = null;
-        outPath = packageGenerateEntity.getOutPath() + "\\" + packageGenerateEntity.getBasePackageStr().replaceAll("\\.","/") + "/";
-
+        outPath = GlobalConfig.applicationConfig.getBaseOutPath() + packageGenerateEntity.getOutPath() + "\\" + packageGenerateEntity.getBasePackageStr().replaceAll("\\.","/") + "/";
+        packageGenerateEntity.setTempletePath(GlobalConfig.applicationConfig.getProjectPath() +"\\" + packageGenerateEntity.getTempletePath());
         packageGenerateEntity.setOutPath(outPath);
         packageGenerateEntity.getExtraParams().put("packageName", packageGenerateEntity.getBasePackageStr());
         writeFile(packageGenerateEntity);

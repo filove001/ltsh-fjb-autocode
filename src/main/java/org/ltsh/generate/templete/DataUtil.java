@@ -1,6 +1,7 @@
 package org.ltsh.generate.templete;
 
 
+import org.ltsh.generate.config.GlobalConfig;
 import org.ltsh.generate.jdbc.BaseDao;
 
 import java.util.List;
@@ -12,7 +13,7 @@ import java.util.Map;
 public class DataUtil {
     public static List<Map<String, Object>> getColumnData(String tableName){
         List<Map<String, Object>> columnDatas = null;
-        columnDatas = BaseDao.queryColumns(tableName);
+        columnDatas = BaseDao.queryColumns(tableName, GlobalConfig.jdbcConfig.getDatabase());
         for (int i = 0; i < columnDatas.size(); i++) {
             Map<String, Object> stringObjectMap = columnDatas.get(i);
             String columnName = String.valueOf(stringObjectMap.get("column_name"));

@@ -2,10 +2,11 @@ package org.ltsh.generate.config;
 
 import com.alibaba.fastjson.JSONObject;
 import org.ltsh.generate.bean.BeanUtils;
-
+import org.ltsh.generate.templete.DataUtil;
 import org.ltsh.generate.xml.ReadXml;
 
-import java.io.InputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -24,8 +25,15 @@ public class ReadConfig {
         }
     }
     public static void readConfig(String path) throws Exception {
-        InputStream resourceAsStream = ReadConfig.class.getResourceAsStream(path);
-        Map configuration = ReadXml.xmlToMap(resourceAsStream, "configuration");
+        FileInputStream fileInputStream = new FileInputStream(path);
+//        InputStream resourceAsStream = ReadConfig.class.getResourceAsStream(path);
+        Map configuration = ReadXml.xmlToMap(fileInputStream, "configuration");
+        fileInputStream.close();
+        Map applicationConfigMap = (Map)configuration.get("applicationConfig");
+        if(applicationConfigMap != null) {
+            ApplicationConfig applicationConfig = BeanUtils.mapToBean(applicationConfigMap, ApplicationConfig.class);
+            GlobalConfig.applicationConfig = applicationConfig;
+        }
         Map jdbcConfigMap = (Map)configuration.get("jdbcConfig");
         if(jdbcConfigMap == null || jdbcConfigMap.isEmpty()){
             throw new Exception("jdbc配置错误");
@@ -62,12 +70,46 @@ public class ReadConfig {
 
 //        List generateList = (List)configuration.get("generateList");
         List<GenerateConfig> generateConfigList = new ArrayList<GenerateConfig>();
-        for (Object obj : generateList) {
-            Map map = (Map) obj;
-            GenerateConfig generateConfig = BeanUtils.mapToBean(map, GenerateConfig.class);
-            generateConfigList.add(generateConfig);
+        if(generateList != null) {
+            for (Object obj : generateList) {
+                Map map = (Map) obj;
+                GenerateConfig generateConfig = BeanUtils.mapToBean(map, GenerateConfig.class);
+                generateConfigList.add(generateConfig);
+            }
         }
+
         GlobalConfig.generateConfigList = generateConfigList;
+        List generateBatchList = getList(configuration, "generateBatchList", "generateBatch");
+        for (Object obj : generateBatchList) {
+            Map map = (Map) obj;
+            GenerateBatchConfig generateBatchConfig = BeanUtils.mapToBean(map, GenerateBatchConfig.class);
+            String baseTempletePath = generateBatchConfig.getBaseTempletePath();
+            File file = new File(GlobalConfig.applicationConfig.getProjectPath() + baseTempletePath);
+            if(file.exists()) {
+                String[] list = file.list();
+                for (String fileName : list) {
+                    GenerateConfig generateConfig = new GenerateConfig();
+
+//                <!--<generate tableName="answer_topic_detail" fileName="answerTopicDetail.sql" refTemplete="sqlTemplete"></generate>-->
+                    generateConfig.setTableName(generateBatchConfig.getTableName());
+                    String modelName = fileName.substring(0, fileName.lastIndexOf("."));
+                    String entityName = DataUtil.getMethodName(generateConfig.getTableName());
+                    if(modelName.equals("entity")) {
+                        entityName = entityName + ".java";
+                    }else if(modelName.equals("sql")) {
+                        entityName = DataUtil.getPropertyName(generateConfig.getTableName()) + ".sql";
+                    } else {
+                        entityName = entityName + DataUtil.getMethodName(modelName) + ".java";
+                    }
+                    generateConfig.setRefTemplete(modelName + "Templete");
+                    generateConfig.setFileName(entityName);
+                    generateConfigList.add(generateConfig);
+                }
+//                System.out.println(JSONObject.toJSONString(list));
+
+            }
+        }
+        System.out.println("配置文件解析完毕");
     }
 
     private static List getList(Map map, String parentKey, String key){

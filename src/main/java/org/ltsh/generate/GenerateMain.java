@@ -20,7 +20,7 @@ import org.ltsh.generate.templete.TempleteUtils;
 @Mojo(name = "run")
 public class GenerateMain extends AbstractMojo {
 
-    @Parameter(defaultValue = "/templete/autoConfig.xml")
+    @Parameter(defaultValue = "/templeteProject/autoConfig.xml")
     private String configPath;
 
     @Override

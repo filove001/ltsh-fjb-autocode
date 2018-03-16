@@ -1,14 +1,11 @@
 package ${packageName};
 
 import ${entityPackage}.${className};
-import org.beetl.sql.core.engine.PageQuery;
+import com.gdca.signofcloud.common.dao.BaseDao;
+import org.apache.ibatis.annotations.Param;
 /**
  * Created by fengjianbo on ${currentDate}.
  */
 public interface ${className}Dao extends BaseDao<${className}> {
-    /**
-     * 查询,分页
-     * @param pageQuery
-     */
-    public void page(PageQuery<${className}> pageQuery);
+
 }
